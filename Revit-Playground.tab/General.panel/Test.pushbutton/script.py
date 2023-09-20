@@ -10,6 +10,7 @@ clr.AddReference('RevitAPIUI')
 from Autodesk.Revit.DB import *
 from Autodesk.Revit.UI import *
 from Autodesk.Revit.UI.Selection import *
+from Autodesk.Revit.Exceptions import OperationCanceledException
 
 # Para trabajar con ICollection
 from System.Collections.Generic import List
