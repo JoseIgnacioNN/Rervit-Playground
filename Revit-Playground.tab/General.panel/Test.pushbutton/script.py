@@ -1,20 +1,33 @@
-# -*- coding: utf-8 -*-
-
-# Importar los módulos necesarios
+# BIBLIOTECAS
+# ............................................................................
 import clr
-clr.AddReference("RevitAPI")
-clr.AddReference("RevitAPIUI")
-from Autodesk.Revit.DB import BuiltInCategory, FilteredElementCollector, Transaction
+import sys
+import os
+import re
+import stat
+import unicodedata
+import traceback
+import System
 
-# Obtener los servicios de Revit
-from pyrevit import revit, DB
-from pyrevit import script
-__author__ = "[Tu Nombre]"
+# Agregar las referencias de Autodesk.Revit.DB y Autodesk.Revit.UI desde pyRevit
+clr.AddReference('RevitAPI')
+clr.AddReference('RevitAPIUI')
+from Autodesk.Revit.DB import *
+from Autodesk.Revit.UI import *
+from Autodesk.Revit.UI.Selection import *
 
-# Obtener el documento activo y la vista activa
-doc = __revit__.ActiveUIDocument.Document
-uidoc = __revit__.ActiveUIDocument
-view = uidoc.ActiveView
+# Para trabajar con ICollection
+from System.Collections.Generic import List
+
+# Para trabajar contra el documento y hacer transacciones
+clr.AddReference('RevitServices')
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+
+doc = DocumentManager.Instance.CurrentDBDocument
+uiapp = DocumentManager.Instance.CurrentUIApplication
+app = uiapp.Application
+uidoc = uiapp.ActiveUIDocument
 
 class CategorySelectionFilter(ISelectionFilter):
     def AllowElement(self, element):
@@ -27,24 +40,20 @@ class CategorySelectionFilter(ISelectionFilter):
 # Define un filtro para seleccionar elementos de la categoría "Structural Foundations"
 filter = CategorySelectionFilter()
 
-try:
-    # Utiliza el método PickObjects para permitir al usuario seleccionar elementos.
-    picked_elements = uidoc.Selection.PickObjects(ObjectType.Element, filter, "Selecciona elementos de la categoría 'Structural Foundations'")
-    
-    if picked_elements:
-        # Recopila los ElementId de los elementos seleccionados
-        selected_element_ids = [reference.ElementId for reference in picked_elements]
+# Utiliza el método PickObjects para permitir al usuario seleccionar elementos.
+picked_elements = uidoc.Selection.PickObjects(ObjectType.Element, filter, "Selecciona elementos de la categoría 'Structural Foundations'")
 
-        # Convierte la lista de ElementId en una colección List[ElementId]
-        selected_element_ids_collection = List[ElementId](selected_element_ids)
+if picked_elements:
+    # Recopila los ElementId de los elementos seleccionados
+    selected_element_ids = [reference.ElementId for reference in picked_elements]
 
-        # Establece los elementos seleccionados en el documento actual
-        uidoc.Selection.SetElementIds(selected_element_ids_collection)
+    # Convierte la lista de ElementId en una colección List[ElementId]
+    selected_element_ids_collection = List[ElementId](selected_element_ids)
 
-        # Ahora los elementos permanecerán seleccionados y puedes manipularlos posteriormente
-    else:
-        # No se seleccionaron elementos.
-        TaskDialog.Show("Sin selección", "No se seleccionaron elementos de la categoría 'Structural Foundations'.")
-except OperationCanceledException:
-    # El usuario presionó el botón "Escape" para cancelar la selección.
-    TaskDialog.Show("Selección cancelada", "El usuario canceló la selección de elementos.")
+    # Establece los elementos seleccionados en el documento actual
+    uidoc.Selection.SetElementIds(selected_element_ids_collection)
+
+    # Ahora los elementos permanecerán seleccionados y puedes manipularlos posteriormente
+else:
+    # El usuario canceló la selección o no se seleccionaron elementos.
+    TaskDialog.Show("Sin selección", "No se seleccionaron elementos de la categoría 'Structural Foundations'.")
