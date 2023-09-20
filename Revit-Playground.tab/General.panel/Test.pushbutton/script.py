@@ -38,17 +38,21 @@ filter = CategorySelectionFilter()
 # Utiliza el método PickObjects para permitir al usuario seleccionar elementos.
 picked_elements = uidoc.Selection.PickObjects(ObjectType.Element, filter, "Selecciona elementos de la categoría 'Structural Foundations'")
 
-if picked_elements:
-    # Recopila los ElementId de los elementos seleccionados
-    selected_element_ids = [reference.ElementId for reference in picked_elements]
+try:
+    if picked_elements:
+        # Recopila los ElementId de los elementos seleccionados
+        selected_element_ids = [reference.ElementId for reference in picked_elements]
 
-    # Convierte la lista de ElementId en una colección List[ElementId]
-    selected_element_ids_collection = List[ElementId](selected_element_ids)
+        # Convierte la lista de ElementId en una colección List[ElementId]
+        selected_element_ids_collection = List[ElementId](selected_element_ids)
 
-    # Establece los elementos seleccionados en el documento actual
-    uidoc.Selection.SetElementIds(selected_element_ids_collection)
+        # Establece los elementos seleccionados en el documento actual
+        uidoc.Selection.SetElementIds(selected_element_ids_collection)
 
     # Ahora los elementos permanecerán seleccionados y puedes manipularlos posteriormente
-else:
-    # El usuario canceló la selección o no se seleccionaron elementos.
+    else:
+        # El usuario canceló la selección o no se seleccionaron elementos.
+        TaskDialog.Show("Sin selección", "No se seleccionaron elementos de la categoría 'Structural Foundations'.")
+
+except(Cancelacion):
     TaskDialog.Show("Sin selección", "No se seleccionaron elementos de la categoría 'Structural Foundations'.")
