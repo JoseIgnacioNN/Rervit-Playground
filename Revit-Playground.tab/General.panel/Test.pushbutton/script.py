@@ -4,8 +4,7 @@
 # ............................................................................
 import clr
 
-from pyrevit import PyRevitException, PyRevitIOError
-
+from pyrevit import *
 
 # Agregar las referencias de Autodesk.Revit.DB y Autodesk.Revit.UI desde pyRevit
 clr.AddReference('RevitAPI')
@@ -40,9 +39,9 @@ class CategorySelectionFilter(ISelectionFilter):
 filter = CategorySelectionFilter()
 
 # Utiliza el método PickObjects para permitir al usuario seleccionar elementos.
-picked_elements = uidoc.Selection.PickObjects(ObjectType.Element, filter, "Selecciona elementos de la categoría 'Structural Foundations'")
-
 try:
+    picked_elements = uidoc.Selection.PickObjects(ObjectType.Element, filter, "Selecciona elementos de la categoría 'Structural Foundations'")
+
     if picked_elements:
         # Recopila los ElementId de los elementos seleccionados
         selected_element_ids = [reference.ElementId for reference in picked_elements]
@@ -58,6 +57,6 @@ try:
         # El usuario canceló la selección o no se seleccionaron elementos.
         TaskDialog.Show("Sin selección", "No se seleccionaron elementos de la categoría 'Structural Foundations'.")
 
-except OperationCanceledException:
+except OperationCanceledException as ex:
     # Maneja la excepción si el usuario la cancela
-    print("kfjahgsdkjfha")
+    TaskDialog.Show("Cancelación", "La operación ha sido cancelada por el usuario.")
