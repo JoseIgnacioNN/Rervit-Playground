@@ -9,7 +9,7 @@ clr.AddReference('RevitAPI')
 clr.AddReference('RevitAPIUI')
 from Autodesk.Revit.DB import *
 from Autodesk.Revit.UI import *
-from Autodesk.Revit.UI.Selection import ISelectionFilter
+from Autodesk.Revit.UI.Selection import *
 
 # Para trabajar con ICollection
 from System.Collections.Generic import List
