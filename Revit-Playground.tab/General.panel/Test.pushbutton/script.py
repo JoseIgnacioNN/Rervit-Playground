@@ -3,7 +3,7 @@
 # BIBLIOTECAS
 # ............................................................................
 import clr
-import sys
+
 import os
 import re
 import stat
