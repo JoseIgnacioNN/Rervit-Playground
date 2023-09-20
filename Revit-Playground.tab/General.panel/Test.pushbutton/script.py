@@ -4,7 +4,6 @@
 # ............................................................................
 import clr
 
-from pyrevit import *
 
 # Agregar las referencias de Autodesk.Revit.DB y Autodesk.Revit.UI desde pyRevit
 clr.AddReference('RevitAPI')
@@ -12,7 +11,6 @@ clr.AddReference('RevitAPIUI')
 from Autodesk.Revit.DB import *
 from Autodesk.Revit.UI import *
 from Autodesk.Revit.UI.Selection import *
-from Autodesk.Revit.Exceptions import *
 
 # Para trabajar con ICollection
 from System.Collections.Generic import List
