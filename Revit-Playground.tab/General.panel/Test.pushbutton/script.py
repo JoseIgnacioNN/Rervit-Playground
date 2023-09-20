@@ -25,12 +25,12 @@ app = uiapp.Application
 uidoc = uiapp.ActiveUIDocument
 
 class CategorySelectionFilter(ISelectionFilter):
-    def AllowElement(self, element):
-        # Asegúrate de que la categoría esté escrita correctamente y coincida con la de tu modelo
-        return element.Category.Name == "Structural Foundations"  # Cambiado a "Structural Foundations" si es el nombre correcto
+	def AllowElement(self, element):
+		# Asegúrate de que la categoría esté escrita correctamente y coincida con la de tu modelo
+		return element.Category.Name == "Structural Foundations"  # Cambiado a "Structural Foundations" si es el nombre correcto
 
-    def AllowReference(self, reference, point):
-        return True
+	def AllowReference(self, reference, point):
+		return True
 
 # Define un filtro para seleccionar elementos de la categoría "Structural Foundations"
 filter = CategorySelectionFilter()
@@ -38,23 +38,17 @@ filter = CategorySelectionFilter()
 # Utiliza el método PickObjects para permitir al usuario seleccionar elementos.
 picked_elements = uidoc.Selection.PickObjects(ObjectType.Element, filter, "Selecciona elementos de la categoría 'Structural Foundations'")
 
-try:
-    if picked_elements:
-        # Recopila los ElementId de los elementos seleccionados
-        selected_element_ids = [reference.ElementId for reference in picked_elements]
+if picked_elements:
+	# Recopila los ElementId de los elementos seleccionados
+	selected_element_ids = [reference.ElementId for reference in picked_elements]
 
-        # Convierte la lista de ElementId en una colección List[ElementId]
-        selected_element_ids_collection = List[ElementId](selected_element_ids)
+	# Convierte la lista de ElementId en una colección List[ElementId]
+	selected_element_ids_collection = List[ElementId](selected_element_ids)
 
-        # Establece los elementos seleccionados en el documento actual
-        uidoc.Selection.SetElementIds(selected_element_ids_collection)
+	# Establece los elementos seleccionados en el documento actual
+	uidoc.Selection.SetElementIds(selected_element_ids_collection)
 
-    # Ahora los elementos permanecerán seleccionados y puedes manipularlos posteriormente
-    else:
-        # El usuario canceló la selección o no se seleccionaron elementos.
-        TaskDialog.Show("Sin selección", "No se seleccionaron elementos de la categoría 'Structural Foundations'.")
-
-except OperationCanceledException: # Maneja la excepción específica cuando el usuario cancela la selección
-    TaskDialog.Show("Sin selección", "La selección fue cancelada por el usuario.")
-except Exception as ex:
-    TaskDialog.Show("Error", "Se produjo un error: {}".format(str(ex)))
+	# Ahora los elementos permanecerán seleccionados y puedes manipularlos posteriormente
+else:
+	# El usuario canceló la selección o no se seleccionaron elementos.
+	TaskDialog.Show("Sin selección", "No se seleccionaron elementos de la categoría 'Structural Foundations'.")
