@@ -4,6 +4,8 @@
 # ............................................................................
 import clr
 
+from pyrevit import *
+
 # Agregar las referencias de Autodesk.Revit.DB y Autodesk.Revit.UI desde pyRevit
 clr.AddReference('RevitAPI')
 clr.AddReference('RevitAPIUI')
@@ -57,4 +59,4 @@ try:
 
 except OperationCanceledException.ToString() as ex:
     # Maneja la excepción si el usuario la cancela
-    TaskDialog.Show("Cancelación", "La operación ha sido cancelada por el usuario.")
+    print("kfjahgsdkjfha")
