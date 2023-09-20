@@ -57,6 +57,6 @@ try:
         # El usuario canceló la selección o no se seleccionaron elementos.
         TaskDialog.Show("Sin selección", "No se seleccionaron elementos de la categoría 'Structural Foundations'.")
 
-except OperationCanceledException as ex:
+except:
     # Maneja la excepción si el usuario la cancela
     TaskDialog.Show("Cancelación", "La operación ha sido cancelada por el usuario.")
