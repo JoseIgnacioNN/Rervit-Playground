@@ -4,12 +4,6 @@
 # ............................................................................
 import clr
 
-import os
-import re
-import stat
-import unicodedata
-import traceback
-import System
 
 # Agregar las referencias de Autodesk.Revit.DB y Autodesk.Revit.UI desde pyRevit
 clr.AddReference('RevitAPI')
