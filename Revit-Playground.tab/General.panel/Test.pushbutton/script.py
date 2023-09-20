@@ -54,6 +54,5 @@ try:
         # El usuario canceló la selección o no se seleccionaron elementos.
         TaskDialog.Show("Sin selección", "No se seleccionaron elementos de la categoría 'Structural Foundations'.")
 
-except Autodesk.Revit.Exceptions.OperationCanceledException as cancelled_ex:
-        # El usuario canceló la selección o no se seleccionaron elementos.
-    TaskDialog.Show("Sin selección", "No se seleccionaron elementos de la categoría 'Structural Foundations'.")
+except OperationCanceledException:
+        sys.exit()
