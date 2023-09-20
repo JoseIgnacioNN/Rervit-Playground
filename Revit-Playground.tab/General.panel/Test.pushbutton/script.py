@@ -4,7 +4,8 @@
 # ............................................................................
 import clr
 
-from pyrevit import *
+from pyrevit import PyRevitException, PyRevitIOError
+
 
 # Agregar las referencias de Autodesk.Revit.DB y Autodesk.Revit.UI desde pyRevit
 clr.AddReference('RevitAPI')
@@ -57,6 +58,6 @@ try:
         # El usuario canceló la selección o no se seleccionaron elementos.
         TaskDialog.Show("Sin selección", "No se seleccionaron elementos de la categoría 'Structural Foundations'.")
 
-except OperationCanceledException.ToString() as ex:
+except OperationCanceledException:
     # Maneja la excepción si el usuario la cancela
     print("kfjahgsdkjfha")
