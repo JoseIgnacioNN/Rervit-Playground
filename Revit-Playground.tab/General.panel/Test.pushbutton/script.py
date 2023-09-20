@@ -1,47 +1,20 @@
 # -*- coding: utf-8 -*-
 
+# Importar los módulos necesarios
+import clr
+clr.AddReference("RevitAPI")
+clr.AddReference("RevitAPIUI")
+from Autodesk.Revit.DB import BuiltInCategory, FilteredElementCollector, Transaction
+
 # Obtener los servicios de Revit
 from pyrevit import revit, DB
 from pyrevit import script
+__author__ = "[Tu Nombre]"
 
-# BIBLIOTECAS
-# ............................................................................
-import clr
-import sys
-import os
-import re
-import stat
-import unicodedata
-import traceback
-import System
-
-
-# Para trabajar con la RevitAPI
-clr.AddReference('RevitAPI')
-import Autodesk
-from Autodesk.Revit.DB import *
-from Autodesk.Revit.ApplicationServices import *
-from Autodesk.Revit.DB.Structure import *
-
-# Para trabajar con la RevitAPIUI
-clr.AddReference('RevitAPIUI')
-import Autodesk
-from Autodesk.Revit.UI import *
-from Autodesk.Revit.UI.Selection import *
-
-
-# Para trabajar con ICollection
-from System.Collections.Generic import *
-
-# Para trabajar contra el documento y hacer transacciones
-clr.AddReference('RevitServices')
-from RevitServices.Persistence import DocumentManager
-from RevitServices.Transactions import TransactionManager
-
-doc = DocumentManager.Instance.CurrentDBDocument
-uiapp = DocumentManager.Instance.CurrentUIApplication
-app = uiapp.Application
-uidoc = uiapp.ActiveUIDocument
+# Obtener el documento activo y la vista activa
+doc = __revit__.ActiveUIDocument.Document
+uidoc = __revit__.ActiveUIDocument
+view = uidoc.ActiveView
 
 class CategorySelectionFilter(ISelectionFilter):
     def AllowElement(self, element):
