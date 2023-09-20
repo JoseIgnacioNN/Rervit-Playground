@@ -56,3 +56,5 @@ try:
 
 except OperationCanceledException: # Maneja la excepción específica cuando el usuario cancela la selección
     TaskDialog.Show("Sin selección", "La selección fue cancelada por el usuario.")
+except Exception as ex:
+    TaskDialog.Show("Error", "Se produjo un error: {}".format(str(ex)))
